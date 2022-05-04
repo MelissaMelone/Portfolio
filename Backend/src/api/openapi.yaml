@@ -1,206 +1,331 @@
 openapi: 3.0.0
 info:
-  title: Adressbuch
-  description: "Die Adressbuch-App nutzt einen simplen REST-Webservices zur Kommunikation\
-    \ mit dem Backend. Dieser ermöglicht die üblichen CRUD-Operationen zur Suche,\
-    \ Anzeige, Bearbeitung und Löschung von Adressen, wobei jede Adresse aus einem\
-    \ Vornamen, Nachnamen, Telefonnummer und eine E-Mailadresse besteht."
+  title: Kleintierauffangstation
+  version: '1.0'
   contact:
-    name: Dennis Schulmeister-Zimolong
-    url: https://www.wpvs.de
-    email: dhbw@windows3.de
-  license:
-    name: CC-BY-4.0
-    url: https://creativecommons.org/licenses/by/4.0/deed.de
-  version: "1.0"
+    name: Melissa Schwedes
+    email: meli.sch09@gmail.com
+  description: |-
+    Diese App für eine Kleintierauffangstation nutzt einen REST-Webservice zur Kommunikation mit dem Backend. Die Daten der Kleintiere können angezeigt, gesucht, bearbeitet oder gelöscht werden. Das Gleiche gilt für die Pflegekräfte.
+    Die Kleintiere besitzen jeweils Details zu Name, Geschlecht, Alter, Rasse und gesundheitlichem Zustand. Eine Pflegekraft besitzt einen Vornamen, Nachname, eine Rolle und eine Emailadresse.
 servers:
-- url: http://localhost:3000
-tags:
-- name: Index
-- name: Adresse
+  - url: 'http://localhost:3000'
 paths:
   /:
     get:
-      tags:
-      - Index
       summary: Wurzeladresse des Webservices
-      description: Liefert eine HATEOAS-Übersicht aller collections
-      operationId: index
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/HATEOAS_Collection'
-                x-content-type: application/json
-
-  /address:
-    get:
       tags:
-      - Adresse
-      summary: Adressen suchen
-      description: Suche nach Adressen. Gibt eine Liste aller Adressen passend zu
-        den übergebenen Suchkriterien zurück.
-      operationId: search-address
-      parameters:
-      - name: first_name
-        in: query
-        description: Vorname
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: last_name
-        in: query
-        description: Nachname
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
+        - Index
       responses:
-        "200":
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HATEOAS_Collection'
+      operationId: get
+      description: liefert eine HATEOAS-Übersicht aller Collections
+  /kleintiere:
+    get:
+      summary: Kleintiere anzeigen
+      tags:
+        - Kleintiere
+      responses:
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Address'
-                x-content-type: application/json
+                  $ref: '#/components/schemas/Kleintiere'
+      operationId: get-kleintiere
+      description: 'Alle Kleintiere die aktell in der Kleintierauffangstation sind, werden angezeigt'
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: name
+          description: Name des Tieres
+        - schema:
+            type: string
+          in: query
+          name: alter
+          description: geschätztes Alter des Tieres
+        - schema:
+            type: string
+          in: query
+          name: geschlecht
+          description: Geschlecht des Tieres
+        - schema:
+            type: string
+          in: query
+          name: zustand
+          description: gesundheitlicher Zustand
+        - schema:
+            type: string
+          in: query
+          name: rasse
+          description: Rasse des Tieres
     post:
+      summary: Kleintier in Klinik aufnehmen
       tags:
-      - Adresse
-      summary: Adresse anlegen
-      description: "Neue Adresse anlegen. Speichert die übergebene Adresse in der\
-        \ Datenbank. Der Wert des Feldes \"_id\" wird dabei ignoriert, da in jedem Fall\
-        \ eine neue Adresse mit neuer ID angelegt wird."
-      operationId: create-address
+        - Kleintiere
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Kleintiere'
+      operationId: post-kleintiere
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Address'
-      responses:
-        "201":
-          description: Created
-          headers:
-            Location:
-              schema:
-                type: string
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
-
-  /address/{id}:
+              $ref: '#/components/schemas/Kleintiere'
+        description: ''
+      description: Neues Kleintier aufnehmen
+  '/kleintiere/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
     get:
+      summary: Kleintier auswählen
       tags:
-      - Adresse
-      summary: Adresse lesen
-      description: Liest eine einzelne Adresse vom Server.
-      operationId: get-address
-      parameters:
-      - name: id
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - Kleintiere
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Address'
-        "404":
+                $ref: '#/components/schemas/Kleintiere'
+        '404':
           description: Not Found
+      operationId: get-kleintiere-id
+      description: Einzelne Kleintierdaten
     put:
+      summary: Kleintierinformationen ersetzen
       tags:
-      - Adresse
-      summary: ""
-      description: "Überschreibt eine vorhandene Adresse auf dem Server. Bis auf die\
-        \ ID können alle Felder geändert werden. Der Versuch, die ID zu ändern, wird\
-        \ vom Server stillschweigend ignoriert."
-      operationId: update-address
-      parameters:
-      - name: id
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Address'
+        - Kleintiere
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Address'
-        "404":
+                $ref: '#/components/schemas/Kleintiere'
+        '404':
           description: Not Found
-    delete:
-      tags:
-      - Adresse
-      summary: Adresse löschen
-      description: Löscht eine Adresse auf dem Server.
-      operationId: delete-address
-      parameters:
-      - name: id
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      responses:
-        "200":
-          description: OK
-        "404":
-          description: Not Found
-    patch:
-      tags:
-      - Adresse
-      summary: Einzelne Adressfelder ändern
-      description: "Ändert einzelne Felder einer vorhandenen Adresse. Zulässig sind\
-        \ alle Felder bis auf die ID, da diese nachträglich nicht mehr verändert werden\
-        \ darf."
-      operationId: patch-address
-      parameters:
-      - name: id
-        in: path
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+      operationId: put-kleintiere-id
+      description: Änderung Tierdaten
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Address'
+              $ref: '#/components/schemas/Kleintiere'
+    patch:
+      summary: Einzelne Details verändern
+      tags:
+        - Kleintiere
       responses:
-        "200":
+        '200':
           description: OK
-        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Kleintiere'
+        '404':
           description: Not Found
-
+      operationId: patch-kleintiere-id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Kleintiere'
+      description: Änderung einzelner Attribute
+    delete:
+      summary: Kleintierdaten löschen
+      tags:
+        - Kleintiere
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+      operationId: delete-kleintiere-id
+      description: Löschen der Daten eines Kleintieres
+  /pflegekraft:
+    get:
+      summary: Pflegekraefte anzeigen
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pflegekrafte'
+      operationId: get-pflegekraft
+      tags:
+        - Pflegekraft
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: vorname
+          description: Vorname des Mitarbeiters
+        - schema:
+            type: string
+          in: query
+          name: nachname
+          description: Nachname des Mitarbeiters
+        - schema:
+            type: string
+          in: query
+          name: rolle
+          description: Rolle der Pflegekraft
+        - schema:
+            type: string
+          in: query
+          name: e-Mail
+          description: E-Mail der Pflegekraft
+      description: Liste der aktuell angestellten Pflegekräften
+    post:
+      summary: Neue Pflegekraft anlegen
+      tags:
+        - Pflegekräfte
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pflegekrafte'
+      operationId: post-pflegekraft
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pflegekrafte'
+      description: Neue Pflegekraft anlegen
+  '/pflegekraft/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Pflegekraft auswählen
+      tags:
+        - Pflegekraft
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pflegekrafte'
+      operationId: get-pflegekraft-id
+      description: Anzeige einer Pflegekraft
+    put:
+      summary: Pflegekraftdaten ersetzen
+      tags:
+        - Pflegekraft
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pflegekrafte'
+        '404':
+          description: Not Found
+      operationId: put-pflegekraft-id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pflegekrafte'
+      description: Datenänderung einer Pflegekraft
+    patch:
+      summary: Einzelne Daten einer Pflegekraft ändern
+      tags:
+        - Pflegekraft
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pflegekrafte'
+        '404':
+          description: Not Found
+      operationId: patch-pflegekraft-id
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pflegekrafte'
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+        description: ''
+      description: Ändern eines einzelnen Attributes von einer Pflegekraft
+    delete:
+      summary: Pflegekraftdaten löschen
+      tags:
+        - Pflegekraft
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+      operationId: delete-pflegekraft-id
+      description: Löschen der Daten einer Pflegekraft
 components:
   schemas:
+    Kleintiere:
+      title: Kleintiere
+      type: object
+      properties:
+        _link:
+          $ref: '#/components/schemas/HATEOS_Resource'
+        id:
+          type: integer
+        name:
+          type: string
+        geschlecht:
+          type: string
+        alter:
+          type: integer
+        zustand:
+          type: string
+        rasse:
+          type: string
+    Pflegekrafte:
+      title: Pflegekrafte
+      type: object
+      properties:
+        id:
+          type: integer
+        vorname:
+          type: string
+        nachname:
+          type: string
+        e-Mail:
+          type: string
+        rolle:
+          type: string
     HATEOAS_Collection:
-      title: HATEOAS-Links einer Collection
+      title: HATEOAS_Collection
       type: object
       properties:
         _name:
@@ -209,57 +334,31 @@ components:
           $ref: '#/components/schemas/HATEOAS_Link'
         create:
           $ref: '#/components/schemas/HATEOAS_Link'
-
-    HATEOAS_Resource:
-      title: HATEOAS-Links einer Resource
+    HATEOS_Resource:
+      title: HATEOS_Resource
       type: object
       properties:
         read:
           $ref: '#/components/schemas/HATEOAS_Link'
-        update:
-          $ref: '#/components/schemas/HATEOAS_Link'
-        patch:
+        upade:
           $ref: '#/components/schemas/HATEOAS_Link'
         delete:
           $ref: '#/components/schemas/HATEOAS_Link'
-
+        patch:
+          $ref: '#/components/schemas/HATEOAS_Link'
     HATEOAS_Link:
-      title: HATEOAS-Link
+      title: HATEOAS_Link
       type: object
       properties:
         url:
           type: string
         method:
           type: string
-        queryParams:
+        query_params:
           type: array
           items:
             type: string
-
-    Address:
-      title: Adresse
-      type: object
-      properties:
-        _links:
-          $ref: '#/components/schemas/HATEOAS_Resource'
-        _id:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        phone:
-          type: string
-        email:
-          type: string
-          pattern: "(.*@.*\\..*)?"
-      required:
-        - first_name
-        - last_name
-      example:
-        _id: "621ff9a936997df5baba746e"
-        first_name: "Fox"
-        last_name: "Mulder"
-        email: "mulder@xfiles.com"
-        phone: "+49 721 553181"
-  securitySchemes: {}
+tags:
+  - name: Index
+  - name: Kleintiere
+  - name: Pflegekraft
