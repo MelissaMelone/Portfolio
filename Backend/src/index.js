@@ -91,7 +91,7 @@ const openApiEnforcer = await OpenApiEnforcer(openApiFile, {
 server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 
 // HTTP-Controller registrieren
-new RootController(server, "/");
+new RootController(server, "/", openApiFile);
 new KleintiereController(server, "/kleintiere");
 new PflegekraftController(server, "/pflegekraft");
 

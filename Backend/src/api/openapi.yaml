@@ -23,8 +23,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HATEOAS_Collection'
-      operationId: get
+      operationId: index
       description: liefert eine HATEOAS-Übersicht aller Collections
+       responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HATEOAS_Collection'
+                x-content-type: application/json
   /kleintiere:
     get:
       summary: Kleintiere anzeigen
@@ -39,7 +49,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Kleintiere'
-      operationId: get-kleintiere
+                x-content-type: application/json
+      operationId: search-kleintiere
       description: 'Alle Kleintiere die aktell in der Kleintierauffangstation sind, werden angezeigt'
       parameters:
         - schema:
