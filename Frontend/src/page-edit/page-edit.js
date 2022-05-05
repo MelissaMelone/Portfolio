@@ -57,18 +57,19 @@ export default class PageEdit extends Page {
         if (this._editId) {
             this._url = `/address/${this._editId}`;
             this._dataset = await this._app.backend.fetch("GET", this._url);
-            this._title = `${this._dataset.first_name} ${this._dataset.last_name}`;
+            this._title = `${this._dataset.name} ${this._dataset.rasse}`;
         } else {
-            this._url = `/address`;
+            this._url = `/kleintiere`;
             this._title = "Adresse hinzufügen";
         }
 
         // Platzhalter im HTML-Code ersetzen
         let html = this._mainElement.innerHTML;
-        html = html.replace("$LAST_NAME$", this._dataset.last_name);
-        html = html.replace("$FIRST_NAME$", this._dataset.first_name);
-        html = html.replace("$PHONE$", this._dataset.phone);
-        html = html.replace("$EMAIL$", this._dataset.email);
+        html = html.replace("$NAME$", this._dataset.name);
+        html = html.replace("$ALTER$", this._dataset.alter);
+        html = html.replace("$GESCHLECHT$", this._dataset.geschlecht);
+        html = html.replace("$RASSE$", this._dataset.rasse);
+        html = html.replace("$ZUSTAND$", this._dataset.zustand);
         this._mainElement.innerHTML = html;
 
         // Event Listener registrieren
@@ -76,10 +77,11 @@ export default class PageEdit extends Page {
         saveButton.addEventListener("click", () => this._saveAndExit());
 
         // Eingabefelder zur späteren Verwendung merken
-        this._firstNameInput = this._mainElement.querySelector("input.first_name");
-        this._lastNameInput  = this._mainElement.querySelector("input.last_name");
-        this._phoneInput     = this._mainElement.querySelector("input.phone");
-        this._emailInput     = this._mainElement.querySelector("input.email");
+        this._nameInput = this._mainElement.querySelector("input.name");
+        this._alterInput  = this._mainElement.querySelector("input.alter");
+        this._geschlechtInput  = this._mainElement.querySelector("input.geschlecht");
+        this._rasseInput     = this._mainElement.querySelector("input.rasse");
+        this._zustandInput     = this._mainElement.querySelector("input.zustand");
     }
 
     /**
@@ -89,18 +91,19 @@ export default class PageEdit extends Page {
     async _saveAndExit() {
         // Eingegebene Werte prüfen
         this._dataset._id        = this._editId;
-        this._dataset.first_name = this._firstNameInput.value.trim();
-        this._dataset.last_name  = this._lastNameInput.value.trim();
-        this._dataset.phone      = this._phoneInput.value.trim();
-        this._dataset.email      = this._emailInput.value.trim();
+        this._dataset.name = this._nameInput.value.trim();
+        this._dataset.alter  = this._alterInput.value.trim();
+        this._dataset.geschlecht  = this._geschlechtInput.value.trim();
+        this._dataset.rasse      = this._rasseInput.value.trim();
+        this._dataset.zustand     = this._zustandInput.value.trim();
 
-        if (!this._dataset.first_name) {
-            alert("Geben Sie erst einen Vornamen ein.");
+        if (!this._dataset.name) {
+            alert("Geben Sie dem Kleintier einen Namen.");
             return;
         }
 
-        if (!this._dataset.last_name) {
-            alert("Geben Sie erst einen Nachnamen ein.");
+        if (!this._dataset.rasse) {
+            alert("Geben Sie die Rasse des Tieres an.");
             return;
         }
 
