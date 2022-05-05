@@ -18,7 +18,7 @@ export default class PageList extends Page {
         this._emptyMessageElement = null;
     }
 
-    /
+    
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
@@ -49,7 +49,7 @@ export default class PageList extends Page {
             html = html.replace("$ALTER$", dataset.alter);
             html = html.replace("$GESCHLECHT$", dataset.geschlecht);
             html = html.replace("$RASSE$", dataset.rasse);
-            html = html.replace("$ZUSTAND$", this._dataset.zustand);
+            html = html.replace("$ZUSTAND$", dataset.zustand);
 
             // Element in die Liste einfügen
             let dummyElement = document.createElement("div");
