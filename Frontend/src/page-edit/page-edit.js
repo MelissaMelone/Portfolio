@@ -21,17 +21,19 @@ export default class PageEdit extends Page {
         this._editId = editId;
 
         this._dataset = {
-            first_name: "",
-            last_name: "",
-            phone: "",
-            email: "",
+            name: "",
+            alter: "",
+            geschlecht: "",
+            zustand: "",
+            rasse: "",
         };
 
         // Eingabefelder
-        this._firstNameInput = null;
-        this._lastNameInput  = null;
-        this._phoneInput     = null;
-        this._emailInput     = null;
+        this._nameInput = null;
+        this._alterInput  = null;
+        this._geschlechtInput     = null;
+        this._zustandInput     = null;
+        this._rasseInput     = null;
     }
 
     /**
