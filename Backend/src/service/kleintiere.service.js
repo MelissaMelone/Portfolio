@@ -4,9 +4,9 @@ import DatabaseFactory from "../database.js";
 import {ObjectId} from "mongodb";
 
 /**
- * Geschäftslogik zur Verwaltung von Adressen. Diese Klasse implementiert die
+ * Geschäftslogik zur Verwaltung von Kleintierdaten. Diese Klasse implementiert die
  * eigentliche Anwendungslogik losgelöst vom technischen Übertragungsweg.
- * Die Adressen werden der Einfachheit halber in einer MongoDB abgelegt.
+ * Die Kleintierdaten werden in einer MongoDB abgelegt.
  */
 export default class KleintiereService {
     /**
@@ -17,13 +17,13 @@ export default class KleintiereService {
     }
 
     /**
-     * Adressen suchen. Unterstützt wird lediglich eine ganz einfache Suche,
+     * Kleintierdaten suchen. Unterstützt wird lediglich eine ganz einfache Suche,
      * bei der einzelne Felder auf exakte Übereinstimmung geprüft werden.
      * Zwar unterstützt MongoDB prinzipiell beliebig komplexe Suchanfragen.
      * Um das Beispiel klein zu halten, wird dies hier aber nicht unterstützt.
      *
      * @param {Object} query Optionale Suchparameter
-     * @return {Promise} Liste der gefundenen Adressen
+     * @return {Promise} Liste der gefundenen Kleintierdaten
      */
     async search(query) {
         let cursor = this._kleintiere.find(query, {
@@ -40,10 +40,10 @@ export default class KleintiereService {
     }
 
     /**
-     * Speichern einer neuen Adresse.
+     * Speichern eines neuen Kleintierdatensatzes.
      *
-     * @param {Object} address Zu speichernde Adressdaten
-     * @return {Promise} Gespeicherte Adressdaten
+     * @param {Object} kleintiere Zu speichernde Kleintierdaten
+     * @return {Promise} Gespeicherte Kleintierdaten
      */
     async create(kleintiere) {
         kleintiere = kleintiere || {};
@@ -61,10 +61,10 @@ export default class KleintiereService {
     }
 
     /**
-     * Auslesen einer vorhandenen Adresse anhand ihrer ID.
+     * Auslesen eines vorhandenen Kleintierdatensatzes anhand seiner ID.
      *
-     * @param {String} id ID der gesuchten Adresse
-     * @return {Promise} Gefundene Adressdaten
+     * @param {String} id ID des gesuchten Kleintieres
+     * @return {Promise} Gefundene Kleintierdaten
      */
     async read(id) {
         let result = await this._addresses.findOne({_id: new ObjectId(id)});
@@ -72,12 +72,12 @@ export default class KleintiereService {
     }
 
     /**
-     * Aktualisierung einer Adresse, durch Überschreiben einzelner Felder
-     * oder des gesamten Adressobjekts (ohne die ID).
+     * Aktualisierung eines Kleintierdatensatzes, durch Überschreiben einzelner Felder
+     * oder des gesamten Kleintierobjekts (ohne die ID).
      *
-     * @param {String} id ID der gesuchten Adresse
-     * @param {[type]} address Zu speichernde Adressdaten
-     * @return {Promise} Gespeicherte Adressdaten oder undefined
+     * @param {String} id ID des gesuchten Kleintieres
+     * @param {[type]} kleintiere Zu speichernde Kleintierdaten
+     * @return {Promise} Gespeicherte Kleintierdaten oder undefined
      */
     async update(id, kleintiere) {
         let oldKleintier = await this._kleintiere.findOne({_id: new ObjectId(id)});
@@ -98,9 +98,9 @@ export default class KleintiereService {
     }
 
     /**
-     * Löschen einer Adresse anhand ihrer ID.
+     * Löschen eines Kleintierdatensatzes anhand seiner ID.
      *
-     * @param {String} id ID der gesuchten Adresse
+     * @param {String} id ID des gesuchten Kleintiers
      * @return {Promise} Anzahl der gelöschten Datensätze
      */
     async delete(id) {
