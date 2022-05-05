@@ -376,7 +376,7 @@ components:
       properties:
         _link:
           $ref: '#/components/schemas/HATEOS_Resource'
-        id:
+        _id:
           type: string
         name:
           type: string
@@ -388,11 +388,14 @@ components:
           type: string
         rasse:
           type: string
+          
     Pflegekrafte:
       title: Pflegekrafte
       type: object
       properties:
-        id:
+        _link:
+          $ref: '#/components/schemas/HATEOS_Resource'
+        _id:
           type: string
         vorname:
           type: string
