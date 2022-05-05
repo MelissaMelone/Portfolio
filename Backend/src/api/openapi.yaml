@@ -16,16 +16,9 @@ paths:
       summary: Wurzeladresse des Webservices
       tags:
         - Index
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HATEOAS_Collection'
       operationId: index
       description: liefert eine HATEOAS-Übersicht aller Collections
-       responses:
+      responses:
         "200":
           description: OK
           content:
@@ -58,33 +51,47 @@ paths:
           in: query
           name: name
           description: Name des Tieres
+          explode: true
+          style: form
         - schema:
             type: string
           in: query
           name: alter
           description: geschätztes Alter des Tieres
+          explode: true
+          style: form
         - schema:
             type: string
           in: query
           name: geschlecht
           description: Geschlecht des Tieres
+          explode: true
+          style: form
         - schema:
             type: string
           in: query
           name: zustand
           description: gesundheitlicher Zustand
+          explode: true
+          style: form
         - schema:
             type: string
           in: query
           name: rasse
           description: Rasse des Tieres
+          explode: true
+          style: form
     post:
       summary: Kleintier in Klinik aufnehmen
       tags:
         - Kleintiere
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
           content:
             application/json:
               schema:
@@ -95,19 +102,20 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Kleintiere'
-        description: ''
       description: Neues Kleintier aufnehmen
-  '/kleintiere/{id}':
-    parameters:
+  /kleintiere/{id}:
+    get:
+      summary: Kleintier auswählen
+      tags:
+        - Kleintiere
+      parameters:
       - schema:
           type: string
         name: id
         in: path
         required: true
-    get:
-      summary: Kleintier auswählen
-      tags:
-        - Kleintiere
+        style: simple
+        explode: false
       responses:
         '200':
           description: OK
@@ -123,6 +131,14 @@ paths:
       summary: Kleintierinformationen ersetzen
       tags:
         - Kleintiere
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
         '200':
           description: OK
@@ -143,6 +159,14 @@ paths:
       summary: Einzelne Details verändern
       tags:
         - Kleintiere
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
         '200':
           description: OK
@@ -163,6 +187,14 @@ paths:
       summary: Kleintierdaten löschen
       tags:
         - Kleintiere
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
         '200':
           description: OK
@@ -182,6 +214,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Pflegekrafte'
+                x-content-type: application/json
       operationId: get-pflegekraft
       tags:
         - Pflegekraft
@@ -191,29 +224,41 @@ paths:
           in: query
           name: vorname
           description: Vorname des Mitarbeiters
+          style: form
+          explode: true
         - schema:
             type: string
           in: query
           name: nachname
           description: Nachname des Mitarbeiters
+          style: form
+          explode: true
         - schema:
             type: string
           in: query
           name: rolle
           description: Rolle der Pflegekraft
+          style: form
+          explode: true
         - schema:
             type: string
           in: query
           name: eMail
           description: E-Mail der Pflegekraft
+          style: form
+          explode: true
       description: Liste der aktuell angestellten Pflegekräften
     post:
       summary: Neue Pflegekraft anlegen
       tags:
         - Pflegekräfte
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
           content:
             application/json:
               schema:
@@ -225,17 +270,19 @@ paths:
             schema:
               $ref: '#/components/schemas/Pflegekrafte'
       description: Neue Pflegekraft anlegen
-  '/pflegekraft/{id}':
-    parameters:
-      - schema:
-          type: string
-        name: id
-        in: path
-        required: true
+  /pflegekraft/{id}:
     get:
       summary: Pflegekraft auswählen
       tags:
         - Pflegekraft
+      parameters:
+      - name: id
+        in: path
+        style: simple
+        explode: false
+        schema:
+          type: string
+        required: true
       responses:
         '200':
           description: OK
@@ -249,6 +296,14 @@ paths:
       summary: Pflegekraftdaten ersetzen
       tags:
         - Pflegekraft
+      parameters:
+      - name: id
+        in: path
+        style: simple
+        explode: false
+        schema:
+          type: string
+        required: true
       responses:
         '200':
           description: OK
@@ -269,6 +324,14 @@ paths:
       summary: Einzelne Daten einer Pflegekraft ändern
       tags:
         - Pflegekraft
+      parameters:
+      - name: id
+        in: path
+        style: simple
+        explode: false
+        schema:
+          type: string
+        required: true
       responses:
         '200':
           description: OK
@@ -284,16 +347,19 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Pflegekrafte'
-          application/xml:
-            schema:
-              type: object
-              properties: {}
-        description: ''
       description: Ändern eines einzelnen Attributes von einer Pflegekraft
     delete:
       summary: Pflegekraftdaten löschen
       tags:
         - Pflegekraft
+      parameters:
+      - name: id
+        in: path
+        style: simple
+        explode: false
+        schema:
+          type: string
+        required: true
       responses:
         '200':
           description: OK
@@ -301,6 +367,7 @@ paths:
           description: Not Found
       operationId: delete-pflegekraft-id
       description: Löschen der Daten einer Pflegekraft
+
 components:
   schemas:
     Kleintiere:
