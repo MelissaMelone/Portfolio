@@ -6,7 +6,8 @@ import OpenApiEnforcerMiddleware from "@dschulmeis/restify-openapi-enforcer-midd
 
 import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
-import AdressController from "./controller/address.controller.js";
+import KleintiereController from "./controller/kleintiere.controller.js";
+import PflegekraftController from "./controller/pflegekraft.controller.js";
 
 // Verzeichnisnamen der Quellcodedatei ermitteln
 import path from "path";
@@ -91,13 +92,14 @@ server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 
 // HTTP-Controller registrieren
 new RootController(server, "/");
-new AdressController(server, "/address");
+new KleintiereController(server, "/kleintiere");
+new PflegekraftController(server, "/pflegekraft");
 
 // Server tatsächlich starten
 server.listen(config.port, config.host, function() {
     console.log();
     console.log("=================");
-    console.log("Adressbuch-Server");
+    console.log("Kleintierdatenverwaltungs-Server");
     console.log("=================");
     console.log();
     console.log("Ausführung mit folgender Konfiguration:");
