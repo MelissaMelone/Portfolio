@@ -4,17 +4,12 @@ import { MongoClient } from "mongodb";
 
 /**
  * Singleton-Klasse zum Zugriff auf das MongoDB-Datenbankobjekt, ohne dieses
- * ständig als Methodenparameter durchreichen zu müssen. Stattdessen kann
- * einfach das Singleton-Objekt dieser Klasse importiert und das Attribut
- * `mongodb` oder `database` ausgelesen werden.
+ * ständig als Methodenparameter durchreichen zu müssen.
  */
 class DatabaseFactory {
     /**
      * Ersatz für den Konstruktor, damit aus dem Hauptprogramm heraus die
-     * Verbindungs-URL der MongoDB übergeben werden kann. Hier wird dann
-     * auch gleich die Verbindung hergestellt.
-     *
-     * @param {String} connectionUrl URL-String mit den Verbindungsdaten
+     * Verbindungs-URL der MongoDB übergeben werden kann.
      */
     async init(connectionUrl) {
         // Datenbankverbindung herstellen
@@ -26,9 +21,7 @@ class DatabaseFactory {
     }
 
     /**
-     * Hilfsmethode zum Anlegen von Demodaten. Würde man so in einer
-     * Produktivanwendung natürlich nicht machen, aber so sehen wir
-     * wenigstens gleich ein paar Daten.
+     * Hilfsmethode zum Anlegen von Demodaten.
      */
     async _createDemoData() {
         let kleintiere = this.database.collection("kleintiere");

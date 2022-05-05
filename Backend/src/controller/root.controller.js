@@ -10,16 +10,10 @@ import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /**
- * Controller für die Wurzeladresse des Webservices. Ermöglicht in dieser
- * Fassung den Abruf der OpenAPI-Spezifikation unter `/?openapi`.
+ * Controller für die Wurzeladresse des Webservices.
  */
 export default class RootController {
-    /**
-     * Konstruktor. Hier werden die URL-Handler registrert.
-     *
-     * @param {Object} server Restify Serverinstanz
-     * @param {String} prefix Gemeinsamer Prefix aller URLs
-     */
+
     constructor(server, prefix) {
         this._openApiFile = path.normalize(path.join(__dirname, "..", "api", "openapi.yaml"));
 
@@ -29,8 +23,7 @@ export default class RootController {
 
     /**
      * GET /:
-     * Übersicht über die vorhandenen Collections liefern (HATEOAS-Prinzip,
-     * so dass Clients die URL-Struktur des Webservices entdecken können).
+     * Übersicht über die vorhandenen Collections liefern
      */
     async index(req, res, next) {
         res.sendResult([

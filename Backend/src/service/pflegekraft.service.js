@@ -4,9 +4,7 @@ import DatabaseFactory from "../database.js";
 import {ObjectId} from "mongodb";
 
 /**
- * Geschäftslogik zur Verwaltung von Pflegekraeften. Diese Klasse implementiert die
- * eigentliche Anwendungslogik losgelöst vom technischen Übertragungsweg.
- * Die Pflegekraefte werden in einer MongoDB abgelegt.
+ * Geschäftslogik zur Verwaltung von Pflegekraeften.
  */
 export default class PflegekraftService {
     /**
@@ -17,13 +15,7 @@ export default class PflegekraftService {
     }
 
     /**
-     * Pflegekraft suchen. Unterstützt wird lediglich eine ganz einfache Suche,
-     * bei der einzelne Felder auf exakte Übereinstimmung geprüft werden.
-     * Zwar unterstützt MongoDB prinzipiell beliebig komplexe Suchanfragen.
-     * Um das Beispiel klein zu halten, wird dies hier aber nicht unterstützt.
-     *
-     * @param {Object} query Optionale Suchparameter
-     * @return {Promise} Liste der gefundenen Pflegekraefte
+     * Pflegekraft suchen.
      */
     async search(query) {
         let cursor = this._pflegekraft.find(query, {
@@ -40,9 +32,6 @@ export default class PflegekraftService {
 
     /**
      * Speichern einer neuen Pflegekraft.
-     *
-     * @param {Object} pflegekraft Zu speichernde Pflegekraft
-     * @return {Promise} Gespeicherte Pflegekraft
      */
     async create(pflegekraft) {
         pflegekraft = pflegekraft || {};
@@ -60,9 +49,6 @@ export default class PflegekraftService {
 
     /**
      * Auslesen eines vorhandenen Pflegekraftdatensatzes anhand seiner ID.
-     *
-     * @param {String} id ID der gesuchten Pflegekraft
-     * @return {Promise} Gefundene Pflegekraft
      */
     async read(id) {
         let result = await this._pflegekraft.findOne({_id: new ObjectId(id)});
@@ -72,10 +58,6 @@ export default class PflegekraftService {
     /**
      * Aktualisierung eines Pflegekraftdatensatzes, durch Überschreiben einzelner Felder
      * oder des gesamten Pflegekraftobjekts (ohne die ID).
-     *
-     * @param {String} id ID der gesuchten Pflegekraft
-     * @param {[type]} pflegekraft Zu speichernde Pflegekraft
-     * @return {Promise} Gespeicherte Pflegekraft oder undefined
      */
     async update(id, pflegekraft) {
         let oldPflegekraft = await this._pflegekraft.findOne({_id: new ObjectId(id)});
@@ -96,9 +78,6 @@ export default class PflegekraftService {
 
     /**
      * Löschen eines Pflegekraftdatensatzes anhand seiner ID.
-     *
-     * @param {String} id ID der gesuchten Pflegekraft
-     * @return {Promise} Anzahl der gelöschten Datensätze
      */
     async delete(id) {
         let result = await this._pflegekraft.deleteOne({_id: new ObjectId(id)});

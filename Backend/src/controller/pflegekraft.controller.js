@@ -5,17 +5,10 @@ import {wrapHandler} from "../utils.js";
 import RestifyError from "restify-errors";
 
 /**
- * HTTP-Controller-Klasse für Pflegekraftdateneinträge. Diese Klasse registriert
- * alle notwendigen URL-Handler beim Webserver für einen einfachen REST-
- * Webservice zum Lesen und Schreiben von Pflegekraeften.
+ * HTTP-Controller-Klasse für Pflegekraftdateneinträge.
  */
 export default class PflegekraftController {
-    /**
-     * Konstruktor. Hier werden die URL-Handler registrert.
-     *
-     * @param {Object} server Restify Serverinstanz
-     * @param {String} prefix Gemeinsamer Prefix aller URLs
-     */
+    
     constructor(server, prefix) {
         this._service = new PflegekraftService();
         this._prefix = prefix;
@@ -31,14 +24,8 @@ export default class PflegekraftController {
         server.del(prefix + "/:id", wrapHandler(this, this.delete));
     }
 
-    /**
-     * Hilfsmethode zum Einfügen von HATEOAS-Links in einen Datensatz.
-     * Dem Datensatz wird ein Attribut `_links` gemäß der OpenAPI-Spezifikation
-     * hinzugefügt, damit ein Client erkennen kann, wie er die Entität lesen,
-     * ändern oder löschen kann.
-     *
-     * @param {Object} entity Zu verändernder Datensatz.
-     */
+    //Einfügen von HATEOAS-Links in einen Datensatz.
+
     _insertHateoasLinks(entity) {
         let url = `${this._prefix}/${entity._id}`;
 
@@ -50,10 +37,9 @@ export default class PflegekraftController {
         }
     }
 
-    /**
-     * GET /pflegekraft
-     * Pflegekraft suchen
-     */
+    
+    //GET /pflegekraft
+
     async search(req, res, next) {
         let result = await this._service.search(req.query);
         result.forEach(entity => this._insertHateoasLinks(entity));
@@ -61,10 +47,9 @@ export default class PflegekraftController {
         return next();
     }
 
-    /**
-     * POST /pflegekraft
-     * Neue Pflegekraft anlegen
-     */
+    
+    //POST /pflegekraft
+
     async create(req, res, next) {
         let result = await this._service.create(req.body);
         this._insertHateoasLinks(result);
@@ -76,10 +61,9 @@ export default class PflegekraftController {
         return next();
     }
 
-    /**
-     * GET /pflegekraft/:id
-     * Pflegekraft auslesen
-     */
+    
+    //GET /pflegekraft/:id
+
     async read(req, res, next) {
         let result = await this._service.read(req.params.id);
         this._insertHateoasLinks(result);
@@ -93,11 +77,10 @@ export default class PflegekraftController {
         return next();
     }
 
-    /**
-     * PUT /pflegekraft/:id
-     * PATCH /pflegekraft/:id
-     * Pflegekraftdaten ändern
-     */
+
+    //PUT /pflegekraft/:id
+    //PATCH /pflegekraft/:id
+    
     async update(req, res, next) {
         let result = await this._service.update(req.params.id, req.body);
         this._insertHateoasLinks(result);
@@ -111,10 +94,9 @@ export default class PflegekraftController {
         return next();
     }
 
-    /**
-     * DELETE /pflegekraft/:id
-     * Pflegekraft löschen
-     */
+    
+    //DELETE /pflegekraft/:id
+ 
     async delete(req, res, next) {
         await this._service.delete(req.params.id)
         res.status(204);

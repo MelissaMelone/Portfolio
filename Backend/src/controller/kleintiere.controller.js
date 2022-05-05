@@ -6,16 +6,10 @@ import RestifyError from "restify-errors";
 
 /**
  * HTTP-Controller-Klasse für Kleintiereinträge. Diese Klasse registriert
- * alle notwendigen URL-Handler beim Webserver für einen einfachen REST-
- * Webservice zum Lesen und Schreiben von Kleintierdaten.
+ * alle notwendigen URL-Handler beim Webserver zum Lesen und Schreiben von Kleintierdaten.
  */
 export default class KleintiereController {
-    /**
-     * Konstruktor. Hier werden die URL-Handler registrert.
-     *
-     * @param {Object} server Restify Serverinstanz
-     * @param {String} prefix Gemeinsamer Prefix aller URLs
-     */
+    
     constructor(server, prefix) {
         this._service = new KleintiereService();
         this._prefix = prefix;
@@ -31,14 +25,9 @@ export default class KleintiereController {
         server.del(prefix + "/:id", wrapHandler(this, this.delete));
     }
 
-    /**
-     * Hilfsmethode zum Einfügen von HATEOAS-Links in einen Datensatz.
-     * Dem Datensatz wird ein Attribut `_links` gemäß der OpenAPI-Spezifikation
-     * hinzugefügt, damit ein Client erkennen kann, wie er die Entität lesen,
-     * ändern oder löschen kann.
-     *
-     * @param {Object} entity Zu verändernder Datensatz.
-     */
+
+    //Einfügen von HATEOAS-Links in einen Datensatz.
+
     _insertHateoasLinks(entity) {
         let url = `${this._prefix}/${entity._id}`;
 
@@ -50,10 +39,8 @@ export default class KleintiereController {
         }
     }
 
-    /**
-     * GET /kleintiere
-     * Kleintiere suchen
-     */
+    //GET /kleintiere
+     
     async search(req, res, next) {
         let result = await this._service.search(req.query);
         result.forEach(entity => this._insertHateoasLinks(entity));
@@ -61,10 +48,8 @@ export default class KleintiereController {
         return next();
     }
 
-    /**
-     * POST /kleintiere
-     * Neues Kleintier anlegen
-     */
+    //POST /kleintiere
+
     async create(req, res, next) {
         let result = await this._service.create(req.body);
         this._insertHateoasLinks(result);
@@ -76,10 +61,9 @@ export default class KleintiereController {
         return next();
     }
 
-    /**
-     * GET /kleintiere/:id
-     * Kleintier auslesen
-     */
+
+    //GET /kleintiere/:id
+
     async read(req, res, next) {
         let result = await this._service.read(req.params.id);
         this._insertHateoasLinks(result);
@@ -93,11 +77,10 @@ export default class KleintiereController {
         return next();
     }
 
-    /**
-     * PUT /kleintiere/:id
-     * PATCH /kleintiere/:id
-     * Kleintier ändern
-     */
+
+    //PUT /kleintiere/:id
+    //PATCH /kleintiere/:id
+
     async update(req, res, next) {
         let result = await this._service.update(req.params.id, req.body);
         this._insertHateoasLinks(result);
@@ -111,10 +94,9 @@ export default class KleintiereController {
         return next();
     }
 
-    /**
-     * DELETE /kleintiere/:id
-     * Kleintier löschen
-     */
+    
+    //DELETE /kleintiere/:id
+
     async delete(req, res, next) {
         await this._service.delete(req.params.id)
         res.status(204);
