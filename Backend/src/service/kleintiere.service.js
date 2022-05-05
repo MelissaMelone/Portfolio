@@ -67,7 +67,7 @@ export default class KleintiereService {
      * @return {Promise} Gefundene Kleintierdaten
      */
     async read(id) {
-        let result = await this._addresses.findOne({_id: new ObjectId(id)});
+        let result = await this._kleintiere.findOne({_id: new ObjectId(id)});
         return result;
     }
 

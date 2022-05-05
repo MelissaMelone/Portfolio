@@ -193,7 +193,7 @@ paths:
         - schema:
             type: string
           in: query
-          name: e-Mail
+          name: eMail
           description: E-Mail der Pflegekraft
       description: Liste der aktuell angestellten Pflegekräften
     post:
@@ -320,7 +320,7 @@ components:
           type: string
         nachname:
           type: string
-        e-Mail:
+        eMail:
           type: string
         rolle:
           type: string

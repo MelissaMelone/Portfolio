@@ -41,8 +41,8 @@ export default class RootController {
             },
             {
                 _name: "pflegekraft",
-                query: {url: "/pflegekraft", method: "GET", queryParams: ["search", "vorname", "nachname", "rolle", "e-Mail"]},
-                create: {rul: "pflegekraft", method: "POST"},
+                query: {url: "/pflegekraft", method: "GET", queryParams: ["search", "vorname", "nachname", "rolle", "eMail"]},
+                create: {rul: "/pflegekraft", method: "POST"},
             }
         ]);
 
