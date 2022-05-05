@@ -377,13 +377,13 @@ components:
         _link:
           $ref: '#/components/schemas/HATEOS_Resource'
         id:
-          type: integer
+          type: string
         name:
           type: string
         geschlecht:
           type: string
         alter:
-          type: integer
+          type: string
         zustand:
           type: string
         rasse:
@@ -393,7 +393,7 @@ components:
       type: object
       properties:
         id:
-          type: integer
+          type: string
         vorname:
           type: string
         nachname:
