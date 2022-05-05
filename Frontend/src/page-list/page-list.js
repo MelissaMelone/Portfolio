@@ -18,28 +18,14 @@ export default class PageList extends Page {
         this._emptyMessageElement = null;
     }
 
-    /**
-     * HTML-Inhalt und anzuzeigende Daten laden.
-     *
-     * HINWEIS: Durch die geerbte init()-Methode wird `this._mainElement` mit
-     * dem <main>-Element aus der nachgeladenen HTML-Datei versorgt. Dieses
-     * Element wird dann auch von der App-Klasse verwendet, um die Seite
-     * anzuzeigen. Hier muss daher einfach mit dem üblichen DOM-Methoden
-     * `this._mainElement` nachbearbeitet werden, um die angezeigten Inhalte
-     * zu beeinflussen.
-     *
-     * HINWEIS: In dieser Version der App wird mit dem üblichen DOM-Methoden
-     * gearbeitet, um den finalen HTML-Code der Seite zu generieren. In größeren
-     * Apps würde man ggf. eine Template Engine wie z.B. Nunjucks integrieren
-     * und den JavaScript-Code dadurch deutlich vereinfachen.
-     */
+    /
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
-        this._title = "Übersicht";
+        this._title = "Übersicht Kleintiere";
 
         // Platzhalter anzeigen, wenn noch keine Daten vorhanden sind
-        let data = await this._app.backend.fetch("GET", "/address");
+        let data = await this._app.backend.fetch("GET", "/kleintiere");
         this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
 
         if (data.length) {
@@ -59,10 +45,11 @@ export default class PageList extends Page {
             let html = templateHtml;
 
             html = html.replace("$ID$", dataset._id);
-            html = html.replace("$LAST_NAME$", dataset.last_name);
-            html = html.replace("$FIRST_NAME$", dataset.first_name);
-            html = html.replace("$PHONE$", dataset.phone);
-            html = html.replace("$EMAIL$", dataset.email);
+            html = html.replace("$NAME$", dataset.name);
+            html = html.replace("$ALTER$", dataset.alter);
+            html = html.replace("$GESCHLECHT$", dataset.geschlecht);
+            html = html.replace("$RASSE$", dataset.rasse);
+            html = html.replace("$ZUSTAND$", this._dataset.zustand);
 
             // Element in die Liste einfügen
             let dummyElement = document.createElement("div");
@@ -78,19 +65,19 @@ export default class PageList extends Page {
     }
 
     /**
-     * Löschen der übergebenen Adresse. Zeigt einen Popup, ob der Anwender
-     * die Adresse löschen will und löscht diese dann.
+     * Löschen der übergebenen Kleintierdaten. Zeigt einen Popup, ob der Anwender
+     * das Tier freilassen will und löscht diese Daten dann.
      *
      * @param {Integer} id ID des zu löschenden Datensatzes
      */
     async _askDelete(id) {
         // Sicherheitsfrage zeigen
-        let answer = confirm("Soll die ausgewählte Adresse wirklich gelöscht werden?");
+        let answer = confirm("Wird das Tier wirklich freigelassen?");
         if (!answer) return;
 
         // Datensatz löschen
         try {
-            this._app.backend.fetch("DELETE", `/address/${id}`);
+            this._app.backend.fetch("DELETE", `/kleintiere/${id}`);
         } catch (ex) {
             this._app.showException(ex);
             return;
