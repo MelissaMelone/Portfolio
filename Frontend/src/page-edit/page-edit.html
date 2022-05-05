@@ -2,16 +2,21 @@
 <style>
     /* FORMULARFELDER */
     main {
+      margin-left:25%;
+      margin-right:25%;
+      margin-top:5%;
         background-color: white;
+        width:auto;
         padding: 1em;
+        border-bottom:0px;
     }
 
     main .form > * {
         display: block;
         width: 100%;
 
-        border: 0px solid lightgrey;
-        border-bottom-width: 1px;
+        border: 1px solid lightgrey;
+        border-bottom-width: 0px;
 
         padding: 0.5em 0 0.5em 0;
         margin-bottom: 1em;
@@ -27,8 +32,8 @@
         padding: 0.5em;
         margin: 0.5em;
 
-        background-color: #e0e0e0;
-        transition: background-color 0.5s;
+        background-color: LightGray;
+        transition: background-color 1.5s;
 
         flex: 1;
         text-align: center;
@@ -43,7 +48,8 @@
     }
 
     main .actions > div:hover {
-        background-color: #f0f0f0;
+        background-color:  DimGray;
+        color: white;
         cursor: pointer;
     }
 </style>
@@ -52,14 +58,16 @@
 <main>
     <div>
         <div class="form">
-            <input class="first_name" placeholder="Vorname" value="$FIRST_NAME$" />
-            <input class="last_name" placeholder="Nachname" value="$LAST_NAME$" />
-            <input class="phone" placeholder="Telefonnummer" value="$PHONE$" />
-            <input class="email" placeholder="E-Mailadresse" value="$EMAIL$" />
+            <input class="name" placeholder="Name" value="$NAME$" />
+            <input class="alter" placeholder="Alter" value="$ALTER$" />
+            <input class="geschlecht" placeholder="Geschlecht" value="$GESCHLECHT$" />
+            <input class="zustand" placeholder="Gesundheitlicher Zustand" value="$ZUSTAND$" />
+            <input class="rasse" placeholder="Rasse" value="$RASSE$" />
+
         </div>
         <div class="actions">
             <div class="action save">
-                <a>💾</a>
+                <a>Kleintier aufnehmen</a>
             </div>
         </div>
     </div>

@@ -1,9 +1,8 @@
 {
-  "name": "adressbuch-backend",
+  "name": "kleintierverwaltung-backend",
   "version": "1.0.0",
-  "description": "Adressbuch: Backend",
-  "author": "Dennis Schulmeister-Zimolong",
-  "license": "CC-BY-4.0",
+  "description": "Kleintierverwaltung: Backend",
+  "author": "Melissa & Simeon",
   "main": "src/index.js",
   "type": "module",
   "scripts": {
