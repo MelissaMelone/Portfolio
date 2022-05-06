@@ -24,8 +24,8 @@ export default class PageEdit extends Page {
             vorname: "",
             nachname: "",
             rolle: "",
-            email: "",
             eMail: "",
+
         };
 
         // Eingabefelder
@@ -66,7 +66,7 @@ export default class PageEdit extends Page {
         // Eingabefelder zur späteren Verwendung merken
         this._vornameInput = this._mainElement.querySelector("input.vorname");
         this._nachnameInput  = this._mainElement.querySelector("input.nachname");
-        this._geschlechtInput  = this._mainElement.querySelector("input.rolle");
+        this._rolleInput  = this._mainElement.querySelector("input.rolle");
         this._eMailInput     = this._mainElement.querySelector("input.eMail");
 
     }
@@ -106,6 +106,6 @@ export default class PageEdit extends Page {
         }
 
         // Zurück zur Übersicht
-        location.hash = "#/";
+        location.hash = "#/P/";
     }
 };
