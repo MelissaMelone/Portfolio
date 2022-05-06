@@ -27,7 +27,10 @@ html {
 @media (min-width: 40em) {
     html {
         /* http://bg.siteorigin.com/ */
-        background-color: MistyRose;
+
+        background-image: url(Hintergrund.jpg) ;
+
+        background-size:cover;
         font-size: 11pt;
     }
 
@@ -37,11 +40,6 @@ html {
         margin: 0 auto;
         margin-top: 2em;
         margin-bottom: 2em;
-
-
-        border: 1px solid #202020;
-        box-shadow: 1px 1px 3px rgba(0,0,0, 0.5);
-
     }
 }
 
@@ -50,12 +48,14 @@ nav {
     user-select: none;
     display: flex;
     justify-content: center;
-    background-color: DimGray;
+     background-color: Silver;
     color: white;
 
     border: 0px solid white;
     border-bottom-width: 3px;
     border-top-width: 3px;
+    text-align: center;
+    font-size: 15pt;
 }
 
 nav a,
@@ -65,9 +65,10 @@ nav a:visited {
 
     display: block;
     padding: 1em;
+
 }
 nav a:hover {
-   color: black;
+   color: white;
 }
 
 nav.non-interactive a:hover {
@@ -84,17 +85,21 @@ nav ul {
     display: flex;
 }
 
-nav li.active {
+nav li.active{
 
-    background-color: Linen  ;
-    border: 0px solid FireBrick;
-    border-bottom-width: 3px;
+  background-color: LightGray;
 }
 
 nav li:hover {
-    background-color: Linen ;
+    background-color: DimGray ;
     color: black;
 
     border: 0px solid black;
-    border-bottom-width: 3px;
+
+
+}
+#Plus{
+  height:25pt;
+
+
 }
