@@ -60,6 +60,11 @@ export default class PageEdit extends Page {
         html = html.replace("$ZUSTAND$", this._dataset.zustand);
         this._mainElement.innerHTML = html;
 
+
+
+
+
+
         // Event Listener registrieren
         let saveButton = this._mainElement.querySelector(".action.save");
         saveButton.addEventListener("click", () => this._saveAndExit());
@@ -67,7 +72,7 @@ export default class PageEdit extends Page {
         // Eingabefelder zur späteren Verwendung merken
         this._nameInput = this._mainElement.querySelector("input.name");
         this._alterInput  = this._mainElement.querySelector("input.alter");
-        this._geschlechtInput  = this._mainElement.querySelector("input.geschlecht");
+        this._geschlechtInput  = this._mainElement.querySelector("select.geschlecht");
         this._rasseInput     = this._mainElement.querySelector("input.rasse");
         this._zustandInput     = this._mainElement.querySelector("input.zustand");
     }

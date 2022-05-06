@@ -66,7 +66,7 @@ export default class PageEdit extends Page {
         // Eingabefelder zur späteren Verwendung merken
         this._vornameInput = this._mainElement.querySelector("input.vorname");
         this._nachnameInput  = this._mainElement.querySelector("input.nachname");
-        this._rolleInput  = this._mainElement.querySelector("input.rolle");
+        this._rolleInput  = this._mainElement.querySelector("select.rolle");
         this._eMailInput     = this._mainElement.querySelector("input.eMail");
 
     }
