@@ -24,16 +24,28 @@ class App {
         this.router = new Router([
             {
                 url: "^/$",
-                show: () => this._gotoList()
+                show: () => this._gotoListT()
             },{
-                url: "^/new/$",
-                show: () => this._gotoNew()
+                url: "^/newT/$",
+                show: () => this._gotoNewT()
+            },
+            {
+                url: "^/P/$",
+                show: () => this._gotoListP()
             },{
-                url: "^/edit/(.*)$",
-                show: matches => this._gotoEdit(matches[1]),
+                url: "^/newP/$",
+                show: () => this._gotoNewP()
+            }
+            ,{
+                url: "^/editT/(.*)$",
+                show: matches => this._gotoEditT(matches[1]),
+            },
+            {
+                url: "^/editP/(.*)$",
+                show: matches => this._gotoEditP(matches[1]),
             },{
                 url: ".*",
-                show: () => this._gotoList()
+                show: () => this._gotoListT()
             },
         ]);
 
@@ -64,7 +76,7 @@ class App {
     /**
      * Übersichtsseite anzeigen. Wird vom Single Page Router aufgerufen.
      */
-    async _gotoList() {
+    async _gotoListT() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
             let {default: PageList} = await import("./page-list/page-list.js");
@@ -75,16 +87,44 @@ class App {
         } catch (ex) {
             this.showException(ex);
         }
+
     }
+    async _gotoListP() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageList} = await import("./page-list-Pfleger/page-list.js");
+
+            let page = new PageList(this);
+            await page.init();
+            this._showPage(page, "list");
+        } catch (ex) {
+            this.showException(ex);
+        }
+
+    }
+
+
 
     /**
      * Seite zum Anlegen einer neuen Adresse anzeigen.  Wird vom Single Page
      * Router aufgerufen.
      */
-    async _gotoNew() {
+    async _gotoNewT() {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
             let {default: PageEdit} = await import("./page-edit/page-edit.js");
+
+            let page = new PageEdit(this);
+            await page.init();
+            this._showPage(page, "new");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+    async _gotoNewP() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageEdit} = await import("./page-edit-Pfleger/page-edit.js");
 
             let page = new PageEdit(this);
             await page.init();
@@ -100,10 +140,22 @@ class App {
      *
      * @param {Number} id ID der zu bearbeitenden Adresse
      */
-    async _gotoEdit(id) {
+    async _gotoEditT(id) {
         try {
             // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
             let {default: PageEdit} = await import("./page-edit/page-edit.js");
+
+            let page = new PageEdit(this, id);
+            await page.init();
+            this._showPage(page, "edit");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+    async _gotoEditP(id) {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: PageEdit} = await import("./page-edit-Pfleger/page-edit.js");
 
             let page = new PageEdit(this, id);
             await page.init();
