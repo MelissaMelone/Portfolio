@@ -36,7 +36,7 @@ export default class PageEdit extends Page {
         this._rasseInput     = null;
     }
 
-  
+
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
@@ -48,7 +48,7 @@ export default class PageEdit extends Page {
             this._title = `${this._dataset.name} ${this._dataset.rasse}`;
         } else {
             this._url = `/kleintiere`;
-            this._title = "Adresse hinzufügen";
+            this._title = "Kleintier hinzufügen";
         }
 
         // Platzhalter im HTML-Code ersetzen
