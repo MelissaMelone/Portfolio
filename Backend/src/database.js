@@ -25,43 +25,73 @@ class DatabaseFactory {
      */
     async _createDemoData() {
         let kleintiere = this.database.collection("kleintiere");
+        let pflegekraft = this.database.collection("pflegekraft");
 
         if (await kleintiere.estimatedDocumentCount() === 0) {
             kleintiere.insertMany([
                 {
                     name: "Bello",
                     alter: "4",
-                    geschlecht: "male",
-                    zustand: "gut",
+                    geschlecht: "männlich",
+                    zustand: "Fieber",
                     rasse: "Hund",
                 },
                 {
                     name: "Mieze",
                     alter: "5",
-                    geschlecht: "female",
-                    zustand: "krank",
+                    geschlecht: "weiblich",
+                    zustand: "gebrochenes Bein",
                     rasse: "Katze",
                 },
                 {
                     name: "Jürgen",
                     alter: "2",
-                    geschlecht: "male",
-                    zustand: "mittel",
+                    geschlecht: "männlich",
+                    zustand: "Flohbefall",
                     rasse: "Vogel",
                 },
                 {
                     name: "Selma",
                     alter: "9",
-                    geschlecht: "female",
-                    zustand: "alt",
+                    geschlecht: "weiblich",
+                    zustand: "Durchfall",
                     rasse: "Hund",
                 },
                 {
-                    name: "Kitty",
+                    name: "Stella",
                     alter: "4",
-                    geschlecht: "female",
-                    zustand: "fit",
+                    geschlecht: "weiblich",
+                    zustand: "",
                     rasse: "Kaninchen",
+                },
+            ]);
+        }
+
+        if (await pflegekraft.estimatedDocumentCount() === 0) {
+            pflegekraft.insertMany([
+                {
+                    vorname: "Sabine",
+                    nachname: "Müller",
+                    rolle: "Facharzt",
+                    eMail: "sabine@müller.de"
+                },
+                {
+                    vorname: "Rainer",
+                    nachname: "Zufall",
+                    rolle: "Sekretär",
+                    eMail: "rainer@zufall.de"
+                },
+                {
+                    vorname: "Marie",
+                    nachname: "Joanna",
+                    rolle: "Praktikant",
+                    eMail: "marie.joanna@web.de"
+                },
+                {
+                    vorname: "Max",
+                    nachname: "Müller",
+                    rolle: "Pfleger",
+                    eMail: "sabine@müller.de"
                 },
             ]);
         }
