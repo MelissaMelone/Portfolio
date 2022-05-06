@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>Adressbuch</title>
+        <title>Kleintierauffangstation</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!-- Mit esbuild erzeugte Bundles aus allen JS/CSS-Dateien -->
@@ -19,14 +19,23 @@
         <!-- Kopfbereich mit Tabreitern -->
         <nav id="app-menu">
             <ul>
-                <li data-page-name="list">
-                    <a href="#/">Übersicht</a>
+                <li data-page-name="listT">
+                    <a href="#/">Übersicht Tiere</a>
                 </li>
-                <li data-page-name="new">
-                    <a href="#/new/">neues Tier aufnehmen</a>
+                <li data-page-name="newT">
+                    <a href="#/newT/">neues Tier aufnehmen</a>
                 </li>
-                <li data-page-name="edit" class="non-interactive">
+                <li data-page-name="editT" class="non-interactive">
                     <a>Tierdaten bearbeiten</a>
+                </li>
+                <li data-page-name="listP">
+                    <a href="#/P/">Übersicht Pfleger</a>
+                </li>
+                <li data-page-name="newP">
+                    <a href="#/newP/">neuen Pfleger aufnehmen</a>
+                </li>
+                <li data-page-name="editP" class="non-interactive">
+                    <a>Pflegerdaten bearbeiten</a>
                 </li>
             </ul>
         </nav>

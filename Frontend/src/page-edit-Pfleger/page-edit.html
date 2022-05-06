@@ -1,0 +1,74 @@
+<!-- Stylesheet der Seite -->
+<style>
+    /* FORMULARFELDER */
+    main {
+      margin-left:25%;
+      margin-right:25%;
+      margin-top:5%;
+        background-color: white;
+        width:auto;
+        padding: 1em;
+        border-bottom:0px;
+    }
+
+    main .form > * {
+        display: block;
+        width: 100%;
+
+        border: 1px solid lightgrey;
+        border-bottom-width: 0px;
+
+        padding: 0.5em 0 0.5em 0;
+        margin-bottom: 1em;
+    }
+
+    /* AKTIONSBUTTONS */
+    main .actions {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    main .actions > div {
+        padding: 0.5em;
+        margin: 0.5em;
+
+        background-color: LightGray;
+        transition: background-color 1.5s;
+
+        flex: 1;
+        text-align: center;
+    }
+
+    main .actions > div:first-child {
+        margin-left: 0;
+    }
+
+    main .actions > div:last-child {
+        margin-right: 0;
+    }
+
+    main .actions > div:hover {
+        background-color:  DimGray;
+        color: white;
+        cursor: pointer;
+    }
+</style>
+
+<!-- Inhalt der Seite -->
+<main>
+    <div>
+        <div class="form">
+            <input class="vorname" placeholder="Vorname" value="$VORNAME$" />
+            <input class="nachname" placeholder="Nachname" value="$NACHNAME$" />
+            <input class="rolle" placeholder="Rolle" value="$ROLLE$" />
+            <input class="eMail" placeholder="E-Mail" value="$EMAIL$" />
+
+
+        </div>
+        <div class="actions">
+            <div class="action save">
+                <a>Pflegekraft aufnehmen</a>
+            </div>
+        </div>
+    </div>
+</main>
