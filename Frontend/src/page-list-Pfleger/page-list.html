@@ -1,16 +1,26 @@
 <!-- Stylesheet der Seite -->
 <style>
     /* LISTENEINTRÄGE */
+    main {
+      margin-top:1%;
+      margin-left:25%;
+      margin-right:25%;
+
+    }
     main ol {
         list-style: none;
-        margin: 0;
-        padding: 0;
+
+        padding: 0em;
+        display:flex;
+        flex-wrap: wrap;
     }
 
+
     main li {
-        margin: 0;
         padding: 1em;
         padding-bottom: 0.5em;
+        margin: 1em;
+        width: 41%;
 
         background-color: white;
         transition: background-color 0.5s;
@@ -23,7 +33,7 @@
         background-color: #fafafa;
     }
 
-    main .name {
+    main .vorname {
         font-size: 150%;
     }
 
@@ -64,12 +74,13 @@
         <!-- Platzhalter für eine leere Liste -->
         <li class="empty-placeholder">
             <div class="vorname">
-                Keine Einträge vorhanden
+                Keine Einträge
             </div>
         </li>
 
         <!-- Vorlage für einen Eintrag in der Liste -->
         <li class="list-entry" data-id="$ID$">
+
             <div class="vorname">
                 $VORNAME$, $NACHNAME$
             </div>

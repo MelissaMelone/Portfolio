@@ -2,19 +2,25 @@
 <style>
     /* LISTENEINTRÄGE */
     main {
-      margin-left:20%;
-      margin-right:20%;
+      margin-top:1%;
+      margin-left:25%;
+      margin-right:25%;
+
     }
     main ol {
         list-style: none;
-        margin: 0;
-        padding: 0;
+
+        padding: 0em;
+        display:flex;
+        flex-wrap: wrap;
     }
 
     main li {
-        margin: 0;
+        
         padding: 1em;
         padding-bottom: 0.5em;
+        margin: 1em;
+        width: 41%;
 
         background-color: white;
         transition: background-color 0.5s;
@@ -41,7 +47,7 @@
         padding: 0.5em;
         margin: 0.5em;
 
-        background-color: #e0e0e0;
+        background-color: Silver;
         transition: background-color 0.5s;
 
         flex: 1;
@@ -74,7 +80,7 @@
 
         <!-- Vorlage für einen Eintrag in der Liste -->
         <li class="list-entry" data-id="$ID$">
-            <div class="name">
+                      <div class="name">
                 $NAME$, $RASSE$
             </div>
             <div class="alter">
