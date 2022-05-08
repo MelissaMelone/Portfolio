@@ -22,10 +22,10 @@ export default class PageList extends Page {
     async init() {
         // HTML-Inhalt nachladen
         await super.init();
-        this._title = "Übersicht Kleintiere";
+        this._title = "Übersicht Pflegekräfte";
 
         // Platzhalter anzeigen, wenn noch keine Daten vorhanden sind
-        let data = await this._app.backend.fetch("GET", "/kleintiere");
+        let data = await this._app.backend.fetch("GET", "/pflegekraft");
         this._emptyMessageElement = this._mainElement.querySelector(".empty-placeholder");
 
         if (data.length) {
@@ -45,11 +45,11 @@ export default class PageList extends Page {
             let html = templateHtml;
 
             html = html.replace("$ID$", dataset._id);
-            html = html.replace("$NAME$", dataset.name);
-            html = html.replace("$ALTER$", dataset.alter);
-            html = html.replace("$GESCHLECHT$", dataset.geschlecht);
-            html = html.replace("$RASSE$", dataset.rasse);
-            html = html.replace("$ZUSTAND$", dataset.zustand);
+            html = html.replace("$VORNAME$", dataset.vorname);
+            html = html.replace("$NACHNAME$", dataset.nachname);
+            html = html.replace("$ROLLE$", dataset.rolle);
+            html = html.replace("$EMAIL$", dataset.eMail);
+
 
             // Element in die Liste einfügen
             let dummyElement = document.createElement("div");
@@ -59,25 +59,25 @@ export default class PageList extends Page {
             olElement.appendChild(liElement);
 
             // Event Handler registrieren
-            liElement.querySelector(".action.edit").addEventListener("click", () => location.hash = `#/editT/${dataset._id}`);
+            liElement.querySelector(".action.edit").addEventListener("click", () => location.hash = `#/editP/${dataset._id}`);
             liElement.querySelector(".action.delete").addEventListener("click", () => this._askDelete(dataset._id));
         }
     }
 
     /**
-     * Löschen der übergebenen Kleintierdaten. Zeigt einen Popup, ob der Anwender
-     * das Tier freilassen will und löscht diese Daten dann.
+     * Löschen der übergebenen Pfelgerdaten. Zeigt einen Popup, ob der Anwender
+     * die PFlegektaftdaten löschen will.
      *
      * @param {Integer} id ID des zu löschenden Datensatzes
      */
     async _askDelete(id) {
         // Sicherheitsfrage zeigen
-        let answer = confirm("Wird das Tier wirklich freigelassen?");
+        let answer = confirm("Sollen die Daten der Pflegekraft gelöscht werden?");
         if (!answer) return;
 
         // Datensatz löschen
         try {
-            this._app.backend.fetch("DELETE", `/kleintiere/${id}`);
+            this._app.backend.fetch("DELETE", `/pflegekraft/${id}`);
         } catch (ex) {
             this._app.showException(ex);
             return;

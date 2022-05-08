@@ -21,19 +21,19 @@ export default class PageEdit extends Page {
         this._editId = editId;
 
         this._dataset = {
-            name: "",
-            alter: "",
-            geschlecht: "",
-            zustand: "",
-            rasse: "",
+            vorname: "",
+            nachname: "",
+            rolle: "",
+            eMail: "",
+
         };
 
         // Eingabefelder
-        this._nameInput = null;
-        this._alterInput  = null;
-        this._geschlechtInput     = null;
-        this._zustandInput     = null;
-        this._rasseInput     = null;
+        this._vornameInput = null;
+        this._nachnameInput  = null;
+        this._rolleInput     = null;
+        this._eMailInput     = null;
+
     }
 
 
@@ -43,38 +43,32 @@ export default class PageEdit extends Page {
 
         // Bearbeiteten Datensatz laden
         if (this._editId) {
-            this._url = `/kleintiere/${this._editId}`;
+            this._url = `/pflegekraft/${this._editId}`;
             this._dataset = await this._app.backend.fetch("GET", this._url);
-            this._title = `${this._dataset.name} ${this._dataset.rasse}`;
+            this._title = `${this._dataset.vorname} ${this._dataset.nachname}`;
         } else {
-            this._url = `/kleintiere`;
-            this._title = "Kleintier hinzufügen";
+            this._url = `/pflegekraft`;
+            this._title = "Pflegekraft hinzufügen";
         }
 
         // Platzhalter im HTML-Code ersetzen
         let html = this._mainElement.innerHTML;
-        html = html.replace("$NAME$", this._dataset.name);
-        html = html.replace("$ALTER$", this._dataset.alter);
-        html = html.replace("$GESCHLECHT$", this._dataset.geschlecht);
-        html = html.replace("$RASSE$", this._dataset.rasse);
-        html = html.replace("$ZUSTAND$", this._dataset.zustand);
+        html = html.replace("$VORNAME$", this._dataset.vorname);
+        html = html.replace("$NACHNAME$", this._dataset.nachname);
+        html = html.replace("$ROLLE$", this._dataset.rolle);
+        html = html.replace("$EMAIL$", this._dataset.eMail);
         this._mainElement.innerHTML = html;
-
-
-
-
-
 
         // Event Listener registrieren
         let saveButton = this._mainElement.querySelector(".action.save");
         saveButton.addEventListener("click", () => this._saveAndExit());
 
         // Eingabefelder zur späteren Verwendung merken
-        this._nameInput = this._mainElement.querySelector("input.name");
-        this._alterInput  = this._mainElement.querySelector("input.alter");
-        this._geschlechtInput  = this._mainElement.querySelector("select.geschlecht");
-        this._rasseInput     = this._mainElement.querySelector("input.rasse");
-        this._zustandInput     = this._mainElement.querySelector("input.zustand");
+        this._vornameInput = this._mainElement.querySelector("input.vorname");
+        this._nachnameInput  = this._mainElement.querySelector("input.nachname");
+        this._rolleInput  = this._mainElement.querySelector("select.rolle");
+        this._eMailInput     = this._mainElement.querySelector("input.eMail");
+
     }
 
     /**
@@ -84,19 +78,18 @@ export default class PageEdit extends Page {
     async _saveAndExit() {
         // Eingegebene Werte prüfen
         this._dataset._id        = this._editId;
-        this._dataset.name = this._nameInput.value.trim();
-        this._dataset.alter  = this._alterInput.value.trim();
-        this._dataset.geschlecht  = this._geschlechtInput.value.trim();
-        this._dataset.rasse      = this._rasseInput.value.trim();
-        this._dataset.zustand     = this._zustandInput.value.trim();
+        this._dataset.vorname = this._vornameInput.value.trim();
+        this._dataset.nachname  = this._nachnameInput.value.trim();
+        this._dataset.rolle  = this._rolleInput.value.trim();
+        this._dataset.eMail      = this._eMailInput.value.trim();
 
-        if (!this._dataset.name) {
-            alert("Geben Sie dem Kleintier einen Namen.");
+        if (!this._dataset.vorname) {
+            alert("Geben Sie den Vornamen der Pflegekraft ein.");
             return;
         }
 
-        if (!this._dataset.rasse) {
-            alert("Geben Sie die Rasse des Tieres an.");
+        if (!this._dataset.nachname) {
+            alert("Geben Sie den Nachnamen der Pflegekraft ein");
             return;
         }
 
@@ -113,6 +106,6 @@ export default class PageEdit extends Page {
         }
 
         // Zurück zur Übersicht
-        location.hash = "#/";
+        location.hash = "#/P/";
     }
 };

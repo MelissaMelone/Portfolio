@@ -15,8 +15,8 @@
         flex-wrap: wrap;
     }
 
-    main li {
 
+    main li {
         padding: 1em;
         padding-bottom: 0.5em;
         margin: 1em;
@@ -33,7 +33,7 @@
         background-color: #fafafa;
     }
 
-    main .name {
+    main .vorname {
         font-size: 150%;
     }
 
@@ -47,7 +47,7 @@
         padding: 0.5em;
         margin: 0.5em;
 
-        background-color: Silver;
+        background-color: #e0e0e0;
         transition: background-color 0.5s;
 
         flex: 1;
@@ -73,25 +73,22 @@
     <ol>
         <!-- Platzhalter für eine leere Liste -->
         <li class="empty-placeholder">
-            <div class="name">
-                Keine Einträge vorhanden
+            <div class="vorname">
+                Keine Einträge
             </div>
         </li>
 
         <!-- Vorlage für einen Eintrag in der Liste -->
         <li class="list-entry" data-id="$ID$">
-                      <div class="name">
-                $NAME$, $RASSE$
+
+            <div class="vorname">
+                $VORNAME$     $NACHNAME$
             </div>
-            <div class="alter">
-              ≈ $ALTER$ Jahre alt
+            <div class="rolle">
+                $ROLLE$
             </div>
-            <div class="geschlecht">
-                $GESCHLECHT$
-            </div>
-            <div class="zustand">
-                $ZUSTAND$
-            </div>
+            <div class="eMail">
+                $EMAIL$
             <div class="actions">
                 <div class="action edit">
                     <a>🖊️</a>

@@ -6,7 +6,8 @@ import OpenApiEnforcerMiddleware from "@dschulmeis/restify-openapi-enforcer-midd
 
 import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
-import AdressController from "./controller/address.controller.js";
+import KleintiereController from "./controller/kleintiere.controller.js";
+import PflegekraftController from "./controller/pflegekraft.controller.js";
 
 // Verzeichnisnamen der Quellcodedatei ermitteln
 import path from "path";
@@ -30,8 +31,6 @@ await DatabaseFactory.init(config.mongodb);
  * SERVER STARTEN
  * =============================================================================*/
 const server = restify.createServer({
-    // Bei Bedarf notwendige Serverkonfiguration hier erweitern.
-    // Vgl. http://restify.com/docs/server-api/#createserver
 });
 
 server.use(restify.plugins.acceptParser(server.acceptable));
@@ -57,9 +56,7 @@ server.on("restifyError", function(req, res, err, callback) {
     return callback();
 });
 
-// CORS-Header setzen, um Zugriffe von anderen URLs außer der Backend-URL zuzulassen.
-// Außerdem OPTIONS-Anfragen (sog. CORS-Preflight) immer mit Status 200 beantworten,
-// damit die Browser ändernde Aufrufe tatsächlich durchführen.
+// CORS-Header setzen
 server.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", req.header("Origin"));
     res.header("Access-Control-Allow-Methods", req.header("Access-Control-Request-Method"));
@@ -91,13 +88,14 @@ server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 
 // HTTP-Controller registrieren
 new RootController(server, "/");
-new AdressController(server, "/address");
+new KleintiereController(server, "/kleintiere");
+new PflegekraftController(server, "/pflegekraft");
 
-// Server tatsächlich starten
+// Server starten
 server.listen(config.port, config.host, function() {
     console.log();
     console.log("=================");
-    console.log("Adressbuch-Server");
+    console.log("Kleintierdatenverwaltungs-Server");
     console.log("=================");
     console.log();
     console.log("Ausführung mit folgender Konfiguration:");
